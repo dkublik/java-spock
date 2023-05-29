@@ -1,0 +1,59 @@
+buildscript {
+	repositories {
+		mavenCentral()
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+}
+
+plugins {
+	id 'java'
+	id 'groovy'
+	id 'io.freefair.lombok' version '8.0.1'
+}
+
+
+group = 'pl.dk.javaspock'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = JavaVersion.VERSION_17
+
+repositories {
+	mavenCentral()
+	maven {
+		url "https://repo.spring.io/release"
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+lombok {
+	version = '1.18.28'
+}
+
+ext['groovyVersion'] = '4.0.12'
+
+dependencies {
+	testImplementation 'org.spockframework:spock-core:2.3-groovy-4.0'
+}
+
+test {
+	maxHeapSize = "512m"
+	useJUnitPlatform()
+}
+
+tasks.withType(GroovyCompile) {
+	configure(groovyOptions.forkOptions) {
+		memoryMaximumSize = '512m'
+		jvmArgs = ['-Xmx512m']
+	}
+}
+
+tasks.withType(Jar) {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
