@@ -39,6 +39,7 @@ ext['groovyVersion'] = '4.0.12'
 
 dependencies {
 	testImplementation 'org.spockframework:spock-core:2.3-groovy-4.0'
+	testImplementation 'net.bytebuddy:byte-buddy:1.14.5'
 }
 
 test {
